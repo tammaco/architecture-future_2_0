@@ -4,8 +4,6 @@ terraform {
     bucket     = "architecture-future-state-bucket"
     region     = "us-east-1"
     key        = "task2/terraform.tfstate"
-    access_key = ""
-    secret_key = ""
     
     skip_credentials_validation = true
     skip_region_validation      = true
