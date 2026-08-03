@@ -22,18 +22,18 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
-            -w /workspace \
+            -w /workspace/Task2Advanced/infra \
             hashicorp/terraform:1.9.8 \
-            sh -c "cd ./Task2Advanced/infra && terraform init"
+            init
 
       - name: Terraform Plan
         id: plan
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
-            -w /workspace \
+            -w /workspace/Task2Advanced/infra \
             hashicorp/terraform:1.9.8 \
-            sh -c "cd ./Task2Advanced/infra && terraform plan -out=tfplan"
+            plan -out=tfplan
         continue-on-error: true
 
       - name: Upload Plan Artifact
@@ -63,6 +63,6 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
-            -w /workspace \
+            -w /workspace/Task2Advanced/infra \
             hashicorp/terraform:1.9.8 \
-            sh -c "cd ./Task2Advanced/infra && terraform apply tfplan"
+            apply tfplan
