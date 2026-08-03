@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     env:
-      TF_VAR_yandex_access_key: ${{ secrets.TF_VAR_yandex_access_key }}
-      TF_VAR_yandex_secret_key: ${{ secrets.TF_VAR_yandex_secret_key }}
+      TF_HTTP_USERNAME: ${{ secrets.TF_VAR_yandex_access_key }}
+      TF_HTTP_PASSWORD: ${{ secrets.TF_VAR_yandex_secret_key }}
       TF_VAR_yandex_folder_id: ${{ secrets.TF_VAR_yandex_folder_id }}
       TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
       TF_VAR_service_account_key_file: ${{ secrets.TF_VAR_service_account_key_file }}
