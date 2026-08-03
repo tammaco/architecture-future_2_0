@@ -22,15 +22,13 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.8
-          terraform_wrapper: false
 
       - name: Terraform Init
         run: terraform init -chdir=./Task2Advanced/infra
 
       - name: Terraform Plan
         id: plan
-        run: |
-          terraform plan -chdir=./Task2Advanced/infra -out=tfplan
+        run: terraform plan -chdir=./Task2Advanced/infra -out=tfplan
         continue-on-error: true
 
       - name: Upload Plan Artifact
@@ -54,7 +52,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.8
-          terraform_wrapper: false
 
       - name: Download Plan Artifact
         uses: actions/download-artifact@v4
