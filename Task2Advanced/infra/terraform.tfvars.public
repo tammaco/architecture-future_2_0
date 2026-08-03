@@ -1,0 +1,5 @@
+vm_name   = "dev-ubuntu-vm"
+cores     = 2
+memory    = 4
+disk_size = 10
+zone      = "ru-central1-a"

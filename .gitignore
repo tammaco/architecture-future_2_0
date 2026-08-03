@@ -6,7 +6,8 @@
 .terraform.lock.hcl
 *.tfvars
 *.tfvars.json
-!example.tfvars  # Если нужно оставить пример файла для команды
+!terraform.tfvars.public
+!example.tfvars  
 
 key.json
 
