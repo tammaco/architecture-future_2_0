@@ -18,17 +18,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.8
-
+      # Вместо setup-terraform мы просто используем готовый Docker-образ с версией 1.9.8
       - name: Terraform Init
-        run: terraform init -chdir=./Task2Advanced/infra
+        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 init -chdir=./Task2Advanced/infra
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -chdir=./Task2Advanced/infra -out=tfplan
+        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 plan -chdir=./Task2Advanced/infra -out=tfplan
         continue-on-error: true
 
       - name: Upload Plan Artifact
@@ -48,11 +44,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.9.8
-
       - name: Download Plan Artifact
         uses: actions/download-artifact@v4
         with:
@@ -60,4 +51,4 @@ jobs:
           path: ./Task2Advanced/infra
 
       - name: Terraform Apply
-        run: terraform apply -chdir=./Task2Advanced/infra tfplan
+        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 apply -chdir=./Task2Advanced/infra tfplan
