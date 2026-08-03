@@ -1,0 +1,21 @@
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+!example.tfvars  # Если нужно оставить пример файла для команды
+
+key.json
+
+.terraform.tfplan
+plan.out
+crash.log
+*.log
+
+.vscode/
+.idea/
+*.iml
+.DS_Store
