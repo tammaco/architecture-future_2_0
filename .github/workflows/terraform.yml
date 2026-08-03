@@ -8,26 +8,59 @@ on:
     branches: [ "architecture-future_2_0" ]
 
 jobs:
-  terraform:
-    name: 'Terraform Plan and Apply'
+  plan:
+    name: 'Terraform Plan'
     runs-on: ubuntu-latest
+    outputs:
+      plan_exitcode: ${{ steps.plan.outputs.exitcode }}
     
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Terraform Init
-        uses: yandex-cloud/terraform-actions@v1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
         with:
-          terraform-version: '1.9.8'
-          args: '-chdir=./Task2Advanced/infra init'
+          terraform_version: 1.9.8
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        run: terraform init -chdir=./Task2Advanced/infra
 
       - name: Terraform Plan
-        uses: yandex-cloud/terraform-actions@v1
+        id: plan
+        run: |
+          terraform plan -chdir=./Task2Advanced/infra -out=tfplan
+        continue-on-error: true
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
         with:
-          args: '-chdir=./Task2Advanced/infra plan -out=tfplan'
-          
+          name: tfplan
+          path: ./Task2Advanced/infra/tfplan
+
+  apply:
+    name: 'Terraform Apply (Manual Approval)'
+    runs-on: ubuntu-latest
+    needs: plan
+    if: github.ref == 'refs/heads/architecture-future_2_0'
+    environment: production
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+          terraform_wrapper: false
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: ./Task2Advanced/infra
+
       - name: Terraform Apply
-        uses: yandex-cloud/terraform-actions@v1
-        with:
-          args: '-chdir=./Task2Advanced/infra apply tfplan'
+        run: terraform apply -chdir=./Task2Advanced/infra tfplan
