@@ -27,6 +27,7 @@ jobs:
             -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
             -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
             -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
+            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             init -var-file="terraform.tfvars.public"
 
@@ -40,6 +41,7 @@ jobs:
             -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
             -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
             -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
+            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             plan -var-file="terraform.tfvars.public"
 
@@ -53,5 +55,6 @@ jobs:
             -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
             -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
             -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
+            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             apply -auto-approve -var-file="terraform.tfvars.public"
