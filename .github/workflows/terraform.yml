@@ -12,6 +12,13 @@ jobs:
     name: 'Terraform Apply (with Manual Approval)'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      TF_VAR_yandex_folder_id: ${{ secrets.TF_VAR_yandex_folder_id }}
+      TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
+      TF_VAR_service_account_key_file: ${{ secrets.TF_VAR_service_account_key_file }}
+      TF_VAR_ssh_public_key_path: ${{ secrets.TF_VAR_ssh_public_key_path }}
 
     steps:
       - name: Checkout
@@ -26,16 +33,11 @@ jobs:
           echo "TF_VAR_subnet_id: $TF_VAR_subnet_id"
           echo "TF_VAR_service_account_key_file: $TF_VAR_service_account_key_file"
           echo "TF_VAR_ssh_public_key_path: $TF_VAR_ssh_public_key_path"
+          echo "========================================"
 
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace/Task2Advanced/infra \
-            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
-            -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
-            -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
-            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             init -var-file="terraform.tfvars.public"
 
@@ -44,12 +46,6 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace/Task2Advanced/infra \
-            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
-            -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
-            -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
-            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             plan -var-file="terraform.tfvars.public"
 
@@ -58,11 +54,5 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace/Task2Advanced/infra \
-            -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
-            -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
-            -e TF_VAR_yandex_folder_id=${{ secrets.TF_VAR_yandex_folder_id }} \
-            -e TF_VAR_subnet_id=${{ secrets.TF_VAR_subnet_id }} \
-            -e TF_VAR_service_account_key_file=${{ secrets.TF_VAR_service_account_key_file }} \
-            -e TF_VAR_ssh_public_key_path=${{ secrets.TF_VAR_ssh_public_key_path }} \
             hashicorp/terraform:1.9.8 \
             apply -auto-approve -var-file="terraform.tfvars.public"
