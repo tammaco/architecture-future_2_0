@@ -21,6 +21,7 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
+            -v ${{ github.workspace }}/Task2Advanced/infra:/workspace/Task2Advanced/infra \
             -w /workspace/Task2Advanced/infra \
             -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
@@ -31,6 +32,7 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
+            -v ${{ github.workspace }}/Task2Advanced/infra:/workspace/Task2Advanced/infra \
             -w /workspace/Task2Advanced/infra \
             -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
@@ -41,6 +43,7 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
+            -v ${{ github.workspace }}/Task2Advanced/infra:/workspace/Task2Advanced/infra \
             -w /workspace/Task2Advanced/infra \
             -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
             -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
