@@ -18,13 +18,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Вместо setup-terraform мы просто используем готовый Docker-образ с версией 1.9.8
       - name: Terraform Init
-        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 init -chdir=./Task2Advanced/infra
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            hashicorp/terraform:1.9.8 \
+            sh -c "cd ./Task2Advanced/infra && terraform init"
 
       - name: Terraform Plan
         id: plan
-        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 plan -chdir=./Task2Advanced/infra -out=tfplan
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            hashicorp/terraform:1.9.8 \
+            sh -c "cd ./Task2Advanced/infra && terraform plan -out=tfplan"
         continue-on-error: true
 
       - name: Upload Plan Artifact
@@ -51,4 +60,9 @@ jobs:
           path: ./Task2Advanced/infra
 
       - name: Terraform Apply
-        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace hashicorp/terraform:1.9.8 apply -chdir=./Task2Advanced/infra tfplan
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            hashicorp/terraform:1.9.8 \
+            sh -c "cd ./Task2Advanced/infra && terraform apply tfplan"
