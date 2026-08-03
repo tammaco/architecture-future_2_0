@@ -1,0 +1,33 @@
+name: Terraform CI/CD
+
+on: 
+  [push, workflow_dispatch]
+    branches: [ "architecture-future_2_0" ]
+  pull_request:
+    branches: [ "architecture-future_2_0" ]
+
+jobs:
+  terraform:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Terraform Init
+        uses: yandex-cloud/terraform-actions@v1
+        with:
+          terraform-version: '1.9.8'
+          args: '-chdir=./Task2Advanced/infra init'
+
+      - name: Terraform Plan
+        uses: yandex-cloud/terraform-actions@v1
+        with:
+          args: '-chdir=./Task2Advanced/infra plan -out=tfplan'
+
+      - name: Terraform Apply (Manual Approval)
+        uses: yandex-cloud/terraform-actions@v1
+        with:
+          args: '-chdir=./Task2Advanced/infra apply tfplan'
+        environment: production
