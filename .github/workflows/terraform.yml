@@ -19,6 +19,7 @@ jobs:
       TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
       TF_VAR_service_account_key_file: ${{ secrets.TF_VAR_service_account_key_file }}
       TF_VAR_ssh_public_key_path: ${{ secrets.TF_VAR_ssh_public_key_path }}
+      AWS_EC2_METADATA_DISABLED: "true"
 
     steps:
       - name: Checkout
@@ -26,15 +27,6 @@ jobs:
 
       - name: Terraform Init
         run: |
-          echo "=== DEBUG: Проверяем переменные ==="
-          echo "AWS_ACCESS_KEY_ID length: ${#AWS_ACCESS_KEY_ID}"
-          echo "AWS_SECRET_ACCESS_KEY length: ${#AWS_SECRET_ACCESS_KEY}"
-          echo "TF_VAR_yandex_folder_id: $TF_VAR_yandex_folder_id"
-          echo "TF_VAR_subnet_id: $TF_VAR_subnet_id"
-          echo "TF_VAR_service_account_key_file: $TF_VAR_service_account_key_file"
-          echo "TF_VAR_ssh_public_key_path: $TF_VAR_ssh_public_key_path"
-          echo "========================================"
-
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace/Task2Advanced/infra \
