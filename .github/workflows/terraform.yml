@@ -15,13 +15,21 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_EC2_METADATA_DISABLED: "true"
       YC_SERVICE_ACCOUNT_KEY_FILE: ${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE_CONTENT }}
       YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
       YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
+      TF_VAR_vm_name: ${{ vars.TF_VAR_vm_name }}
+      TF_VAR_cores: ${{ vars.TF_VAR_cores }}
+      TF_VAR_memory: ${{ vars.TF_VAR_memory }}
+      TF_VAR_disk_size: ${{ vars.TF_VAR_disk_size }}
       TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
       TF_VAR_ssh_public_key_path: ${{ secrets.TF_VAR_ssh_public_key_path }}
       TF_VAR_zone: ${{ secrets.TF_VAR_zone }}
-      AWS_EC2_METADATA_DISABLED: "true"
+      TF_VAR_yandex_folder_id: ${{ secrets.YC_FOLDER_ID }}
+      TF_VAR_service_account_key_file: ${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE_CONTENT }}
+      TF_VAR_yandex_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      TF_VAR_yandex_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout
@@ -38,9 +46,17 @@ jobs:
             -e YC_SERVICE_ACCOUNT_KEY_FILE \
             -e YC_CLOUD_ID \
             -e YC_FOLDER_ID \
+            -e TF_VAR_vm_name \
+            -e TF_VAR_cores \
+            -e TF_VAR_memory \
+            -e TF_VAR_disk_size \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_zone \
+            -e TF_VAR_yandex_folder_id \
+            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_yandex_access_key \
+            -e TF_VAR_yandex_secret_key \
             hashicorp/terraform:1.9.8 \
             init
 
@@ -55,9 +71,17 @@ jobs:
             -e YC_SERVICE_ACCOUNT_KEY_FILE \
             -e YC_CLOUD_ID \
             -e YC_FOLDER_ID \
+            -e TF_VAR_vm_name \
+            -e TF_VAR_cores \
+            -e TF_VAR_memory \
+            -e TF_VAR_disk_size \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_zone \
+            -e TF_VAR_yandex_folder_id \
+            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_yandex_access_key \
+            -e TF_VAR_yandex_secret_key \
             hashicorp/terraform:1.9.8 \
             plan
 
@@ -72,8 +96,16 @@ jobs:
             -e YC_SERVICE_ACCOUNT_KEY_FILE \
             -e YC_CLOUD_ID \
             -e YC_FOLDER_ID \
+            -e TF_VAR_vm_name \
+            -e TF_VAR_cores \
+            -e TF_VAR_memory \
+            -e TF_VAR_disk_size \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_zone \
+            -e TF_VAR_yandex_folder_id \
+            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_yandex_access_key \
+            -e TF_VAR_yandex_secret_key \
             hashicorp/terraform:1.9.8 \
             apply -auto-approve
