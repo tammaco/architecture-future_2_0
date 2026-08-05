@@ -1,4 +1,3 @@
-# Обязательные переменные (передаются через секреты)
 variable "subnet_id" {
   type = string
 }
@@ -15,11 +14,10 @@ variable "yandex_folder_id" {
   type = string
 }
 
-variable "service_account_key_file" {
+variable "service_account_key_file_path" {
   type = string
 }
 
-# Необязательные переменные (со значениями по умолчанию)
 variable "vm_name" {
   type    = string
   default = "dev-ubuntu-vm"

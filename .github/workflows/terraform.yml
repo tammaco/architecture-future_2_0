@@ -4,30 +4,27 @@ on:
   push:
     branches: [ "architecture-future_2_0" ]
   workflow_dispatch:
-  pull_request:
-    branches: [ "architecture-future_2_0" ]
 
 jobs:
   terraform:
-    name: 'Terraform Apply'
     runs-on: ubuntu-latest
-    environment: production
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_EC2_METADATA_DISABLED: "true"
-      YC_SERVICE_ACCOUNT_KEY_FILE: ${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE_CONTENT }}
-      YC_CLOUD_ID: ${{ secrets.YC_CLOUD_ID }}
-      YC_FOLDER_ID: ${{ secrets.YC_FOLDER_ID }}
       TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
       TF_VAR_ssh_public_key_path: ${{ secrets.TF_VAR_ssh_public_key_path }}
       TF_VAR_yandex_cloud_id: ${{ secrets.YC_CLOUD_ID }}
       TF_VAR_yandex_folder_id: ${{ secrets.YC_FOLDER_ID }}
-      TF_VAR_service_account_key_file: ${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE_CONTENT }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Create key.json
+        run: |
+          mkdir -p Task2Advanced/infra
+          echo '${{ secrets.YC_SERVICE_ACCOUNT_KEY_FILE_CONTENT }}' > Task2Advanced/infra/key.json
 
       - name: Terraform Init
         run: |
@@ -37,14 +34,11 @@ jobs:
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
-            -e YC_SERVICE_ACCOUNT_KEY_FILE \
-            -e YC_CLOUD_ID \
-            -e YC_FOLDER_ID \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
-            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_service_account_key_file_path=key.json \
             hashicorp/terraform:1.9.8 \
             init
 
@@ -56,14 +50,11 @@ jobs:
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
-            -e YC_SERVICE_ACCOUNT_KEY_FILE \
-            -e YC_CLOUD_ID \
-            -e YC_FOLDER_ID \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
-            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_service_account_key_file_path=key.json \
             hashicorp/terraform:1.9.8 \
             plan
 
@@ -75,13 +66,10 @@ jobs:
             -e AWS_ACCESS_KEY_ID \
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
-            -e YC_SERVICE_ACCOUNT_KEY_FILE \
-            -e YC_CLOUD_ID \
-            -e YC_FOLDER_ID \
             -e TF_VAR_subnet_id \
             -e TF_VAR_ssh_public_key_path \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
-            -e TF_VAR_service_account_key_file \
+            -e TF_VAR_service_account_key_file_path=key.json \
             hashicorp/terraform:1.9.8 \
             apply -auto-approve
