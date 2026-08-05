@@ -1,11 +1,7 @@
-data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2204-lts"
-}
-
 resource "yandex_compute_instance" "vm" {
   name        = var.vm_name
   platform_id = "standard-v3"
-  folder_id = var.yandex_folder_id
+  folder_id   = var.yandex_folder_id
 
   resources {
     cores  = var.cores
@@ -26,6 +22,6 @@ resource "yandex_compute_instance" "vm" {
   }
 
   metadata = {
-    ssh-keys = "ubuntu:${file(var.ssh_public_key_path)}"
+    ssh-keys = "ubuntu:${var.ssh_public_key}"
   }
 }

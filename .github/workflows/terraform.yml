@@ -13,7 +13,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_EC2_METADATA_DISABLED: "true"
       TF_VAR_subnet_id: ${{ secrets.TF_VAR_subnet_id }}
-      TF_VAR_ssh_public_key_path: ${{ secrets.TF_VAR_ssh_public_key_path }}
+      TF_VAR_ssh_public_key: ${{ secrets.TF_VAR_ssh_public_key }}
       TF_VAR_yandex_cloud_id: ${{ secrets.YC_CLOUD_ID }}
       TF_VAR_yandex_folder_id: ${{ secrets.YC_FOLDER_ID }}
 
@@ -35,7 +35,7 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
             -e TF_VAR_subnet_id \
-            -e TF_VAR_ssh_public_key_path \
+            -e TF_VAR_ssh_public_key \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
             -e TF_VAR_service_account_key_file_path=key.json \
@@ -51,7 +51,7 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
             -e TF_VAR_subnet_id \
-            -e TF_VAR_ssh_public_key_path \
+            -e TF_VAR_ssh_public_key \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
             -e TF_VAR_service_account_key_file_path=key.json \
@@ -67,7 +67,7 @@ jobs:
             -e AWS_SECRET_ACCESS_KEY \
             -e AWS_EC2_METADATA_DISABLED \
             -e TF_VAR_subnet_id \
-            -e TF_VAR_ssh_public_key_path \
+            -e TF_VAR_ssh_public_key \
             -e TF_VAR_yandex_cloud_id \
             -e TF_VAR_yandex_folder_id \
             -e TF_VAR_service_account_key_file_path=key.json \
