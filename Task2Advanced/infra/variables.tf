@@ -2,10 +2,6 @@ variable "subnet_id" {
   type = string
 }
 
-variable "ssh_public_key_path" {
-  type = string
-}
-
 variable "yandex_cloud_id" {
   type = string
 }
