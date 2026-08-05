@@ -8,5 +8,8 @@ terraform {
 }
 
 provider "yandex" {
-  zone = var.zone
+  zone                         = var.zone
+  service_account_key_content  = var.service_account_key_file
+  cloud_id                     = var.yandex_cloud_id
+  folder_id                    = var.yandex_folder_id
 }
