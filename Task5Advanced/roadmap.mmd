@@ -1,0 +1,22 @@
+gantt
+    title Стратегический роадмап Data Mesh
+    dateFormat  YYYY-MM
+    axisFormat %b %Y
+
+    section Пилот (0–6 мес)
+    Выбор доменов (FinTech Operations, Patient Management)       :done, p1, 2026-01, 2026-03
+    Настройка Kafka + Schema Registry                            :done, p2, 2026-01, 2026-04
+    Пилотные витрины (2 домена)                                  :done, p3, 2026-03, 2026-06
+    Обучение команд (Data Mesh, dbt)                             :done, p4, 2026-04, 2026-06
+
+    section Масштабирование (6–18 мес)
+    Подключение 6 доменов (Clinical Management, AI Diagnostics, Billing, Inventory & Logistics, Partner Management, Notifications) :active, s1, 2026-07, 2027-02
+    Внедрение Data Contracts                                     :active, s2, 2026-09, 2027-03
+    Построение потоковых витрин                                  :active, s3, 2026-10, 2027-06
+    Интеграция портала самообслуживания                          :active, s4, 2027-01, 2027-06
+
+    section Зрелость (18–36 мес)
+    Все 11 доменов подключены                                    :m1, 2027-07, 2028-06
+    Отказ от Camel / Legacy DWH (мосты убраны)                   :m2, 2027-10, 2028-08
+    Data Mesh как стандарт                                       :m3, 2028-01, 2028-12
+    Мониторинг качества данных (SLA)                             :m4, 2028-03, 2028-12
