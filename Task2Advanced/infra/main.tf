@@ -1,3 +1,7 @@
+data "yandex_compute_image" "ubuntu" {
+  family = "ubuntu-2204-lts"
+}
+
 resource "yandex_compute_instance" "vm" {
   name        = var.vm_name
   platform_id = "standard-v3"
