@@ -1,0 +1,121 @@
+graph LR
+    subgraph "Patient Management"
+        PM[Patient]
+    end
+
+    subgraph "Clinical Management"
+        CM[Clinical]
+    end
+
+    subgraph "AI Diagnostics"
+        AI[AI]
+    end
+
+    subgraph "FinTech Operations"
+        FO[FinTech]
+    end
+
+    subgraph "Billing"
+        BI[Billing]
+    end
+
+    subgraph "Inventory & Logistics"
+        IL[Inventory]
+    end
+
+    subgraph "Partner Management"
+        PMI[Integration]
+    end
+
+    subgraph "Notifications"
+        N[Notifications]
+    end
+
+    subgraph "IAM"
+        IAM[IAM]
+    end
+
+    subgraph "Audit"
+        AC[Audit]
+    end
+
+    subgraph "Analytics & Reporting"
+        AR[Analytics]
+    end
+
+    PM -->|PatientRegistered| CM
+    PM -->|PatientRegistered| FO
+    PM -->|PatientRegistered| BI
+    PM -->|PatientRegistered| N
+    PM -->|PatientRegistered| AR
+    PM -->|PatientProfileUpdated| CM
+    PM -->|PatientProfileUpdated| FO
+    PM -->|InsuranceVerified| CM
+    PM -->|InsuranceVerified| BI
+    PM -->|PatientDeactivated| CM
+    PM -->|PatientDeactivated| AC
+
+    CM -->|AppointmentScheduled| N
+    CM -->|AppointmentScheduled| AR
+    CM -->|AppointmentCancelled| N
+    CM -->|DiagnosisAdded| AI
+    CM -->|DiagnosisAdded| PMI
+    CM -->|DiagnosisAdded| AR
+    CM -->|PrescriptionIssued| IL
+    CM -->|PrescriptionIssued| PMI
+    CM -->|PrescriptionIssued| N
+    CM -->|PrescriptionIssued| AR
+    CM -->|ClinicalNoteAppended| AI
+    CM -->|LabResultUploaded| AI
+
+    AI -->|AIRequestCompleted| CM
+    AI -->|AIRequestCompleted| N
+    AI -->|AIRequestCompleted| AR
+    AI -->|AIDiagnosisSuggested| CM
+    AI -->|AIFeedbackReceived| AR
+
+    FO -->|AccountCreated| BI
+    FO -->|AccountCreated| AR
+    FO -->|CreditCreated| BI
+    FO -->|CreditCreated| N
+    FO -->|CreditApproved| N
+    FO -->|PaymentMade| BI
+    FO -->|PaymentMade| N
+    FO -->|PaymentMade| AR
+    FO -->|RefundProcessed| BI
+
+    BI -->|InvoiceGenerated| FO
+    BI -->|InvoiceGenerated| N
+    BI -->|InvoiceGenerated| AR
+    BI -->|InvoicePaid| FO
+    BI -->|InvoiceOverdue| N
+    BI -->|SettlementCompleted| AR
+
+    IL -->|StockLow| PMI
+    IL -->|StockLow| N
+    IL -->|SupplyOrderCreated| PMI
+    IL -->|EquipmentMaintenanceDue| N
+
+    PMI -->|DrugAvailabilityResponse| CM
+    PMI -->|DrugAvailabilityResponse| IL
+    PMI -->|DeviceDataReceived| CM
+    PMI -->|DeviceDataReceived| AI
+    PMI -->|DeviceDataReceived| AR
+    PMI -->|DeviceStatusChanged| IL
+
+    N -->|FeedbackReceived| CM
+    N -->|FeedbackReceived| AR
+    N -->|AlertTriggered| IAM
+    N -->|AlertTriggered| AC
+
+    IAM -->|UserAuthenticated| AC
+    IAM -->|RoleAssigned| N
+    IAM -->|AccessAttemptDenied| N
+    IAM -->|AccessAttemptDenied| AC
+
+    AC -->|ConsentGranted| CM
+    AC -->|ConsentRevoked| CM
+    AC -->|ComplianceReportGenerated| N
+    AC -->|IncidentReported| IAM
+    AC -->|IncidentReported| N
+    AC -->|IncidentReported| AR
